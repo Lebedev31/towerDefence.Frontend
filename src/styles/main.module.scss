@@ -1,4 +1,5 @@
-@use "./mixins.scss";
+@use "./mixins";
+@use "./variables" as v;
 
 .main_wrapper {
   height: 100vh;
@@ -7,29 +8,28 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #f0f0f0;
+  background-color: v.$background-color;
   @include mixins.flex-center;
   overflow: hidden;
 }
 
 .main_form {
   width: 350px;
-  background: rgba(255, 255, 255, 0.1); // Легкая прозрачность
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 100px;
+  margin-top: 100px;
 }
 
 .main_button_container {
   display: flex;
-  gap: 0; // Убираем отступ между кнопками
+  gap: 0;
   width: 100%;
 }
 
 .main_button {
-  flex: 1; // Равномерное распределение пространства
+  flex: 1;
   padding: 10px 15px;
-  background: rgba(135, 206, 235, 0.3); // Полупрозрачный голубой
+  background: v.$white-transparent;
   border: none;
   color: white;
   cursor: pointer;
@@ -46,11 +46,11 @@
   }
 
   &:hover {
-    background: rgba(135, 206, 235, 0.5);
+    background: v.$button-blue-hover;
   }
 
   &:active {
     transform: scale(0.98);
-    background: rgba(135, 206, 235, 0.6);
+    background: v.$button-blue-active;
   }
 }

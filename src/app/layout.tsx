@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Warcraft 3 Clone",
+  title: "Tower Defence",
   description: "Browser-based Warcraft 3 Clone",
 };
 
