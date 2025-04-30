@@ -1,18 +1,27 @@
+"use clent";
 import { useForm } from "react-hook-form";
 import styles from "@/styles/auth.module.scss";
 import { Auth as AuthType } from "@/type/type";
 import { authValidation } from "./validation";
 import { RegisterOptions } from "react-hook-form";
+import { useAuthMutation } from "@/Api/ApiSlice/auth.api.slice";
 
 export function Auth() {
+  const [auth] = useAuthMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AuthType>({ mode: "onChange" });
 
-  const onSubmit = (data: AuthType) => {
-    console.log("Форма отправлена:", data);
+  const onSubmit = async (data: AuthType) => {
+    try {
+      const response = await auth(data).unwrap();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

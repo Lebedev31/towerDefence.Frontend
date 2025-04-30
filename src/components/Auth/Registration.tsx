@@ -2,16 +2,29 @@ import { useForm } from "react-hook-form";
 import styles from "@/styles/auth.module.scss";
 import { Registration as RegistrationType } from "@/type/type";
 import { validationRules } from "./validation";
+import { useRegistrationMutation } from "@/Api/ApiSlice/register.api.slice";
+import { setToggle } from "@/Api/Slice/mainSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Api/store";
+import { toast } from "react-toastify";
 
 export function Registration() {
+  const dispatch: AppDispatch = useDispatch();
+  const [registration, { isSuccess, isError, error }] =
+    useRegistrationMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegistrationType>({ mode: "onChange" });
 
-  const onSubmit = (data: RegistrationType) => {
-    console.log("Форма регистрации отправлена:", data);
+  const onSubmit = async (data: RegistrationType) => {
+    delete data.confirmPassword;
+    const response = await registration(data).unwrap();
+    if (response && isSuccess) {
+      dispatch(setToggle());
+      toast.success("Регистрация прошла успешно!");
+    }
   };
 
   return (

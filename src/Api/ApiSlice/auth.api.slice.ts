@@ -1,12 +1,22 @@
-// src/store/api/auth.api.ts (Файл-заглушка)
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Auth } from "@/type/type";
 
-// Экспортируем функцию с таким же именем, как ожидает ваш компонент.
-// Реализация не важна, так как Jest все равно ее заменит моком.
-export const useLoginMutation = () => {
-  console.warn("Using placeholder useLoginMutation from dummy file!"); // Необязательно, для отладки
-  // Возвращаем структуру, похожую на то, что вернет RTK Query хук
-  return [() => Promise.resolve({}), { isLoading: false }];
-};
+export const authApiSlice = createApi({
+  reducerPath: "authApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_BACKEND,
+    credentials: "include",
+  }),
 
-// Если компонент Auth импортирует что-то еще из этого файла,
-// добавьте и эти экспорты в виде заглушек.
+  endpoints: (builder) => ({
+    auth: builder.mutation<void, Auth>({
+      query: (data) => ({
+        url: "auth/signIn",
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
+
+export const { useAuthMutation } = authApiSlice;
