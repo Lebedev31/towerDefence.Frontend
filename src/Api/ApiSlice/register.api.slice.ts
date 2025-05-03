@@ -3,7 +3,10 @@ import { Registration, MessageRegistration } from "@/type/type";
 
 export const registerApiSlice = createApi({
   reducerPath: "registerApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_BACKEND,
+    timeout: 6000,
+  }),
   endpoints: (builder) => ({
     registration: builder.mutation<MessageRegistration, Registration>({
       query: (newUser) => ({

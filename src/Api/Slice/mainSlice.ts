@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
   toggle: boolean;
@@ -12,8 +12,8 @@ export const mainSlice = createSlice({
   name: "main",
   initialState,
   reducers: {
-    setToggle: (state) => {
-      state.toggle = !state.toggle;
+    setToggle: (state, actions: PayloadAction<boolean>) => {
+      state.toggle = actions.payload;
     },
   },
 });

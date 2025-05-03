@@ -15,12 +15,9 @@ export interface MessageRegistration {
 }
 
 export interface ServerError {
-  status: number;
-  data: {
-    error: string;
-    message: string;
-    path: string;
-    statusCode: number;
-    timestamp: string;
-  };
+  error: string;
+  message: string;
+  path: string;
+  statusCode: number;
+  timestamp: string;
 }

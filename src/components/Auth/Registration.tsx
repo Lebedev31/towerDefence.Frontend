@@ -7,11 +7,12 @@ import { setToggle } from "@/Api/Slice/mainSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Api/store";
 import { toast } from "react-toastify";
+import { rtkError } from "@/Api/function/errorFunction";
+import { ClipLoader } from "react-spinners";
 
 export function Registration() {
   const dispatch: AppDispatch = useDispatch();
-  const [registration, { isSuccess, isError, error }] =
-    useRegistrationMutation();
+  const [registration, { isLoading }] = useRegistrationMutation();
   const {
     register,
     handleSubmit,
@@ -20,10 +21,16 @@ export function Registration() {
 
   const onSubmit = async (data: RegistrationType) => {
     delete data.confirmPassword;
-    const response = await registration(data).unwrap();
-    if (response && isSuccess) {
-      dispatch(setToggle());
-      toast.success("Регистрация прошла успешно!");
+    try {
+      const response = await registration(data).unwrap();
+      if (response) {
+        toast.success("Регистрация прошла успешно!");
+        dispatch(setToggle(false));
+      } else {
+      }
+    } catch (error) {
+      const errorMessage = rtkError(error);
+      toast.error(errorMessage);
     }
   };
 
@@ -79,7 +86,14 @@ export function Registration() {
       </div>
 
       <button type="submit" className={styles.form_button}>
-        Зарегистрироваться
+        {!isLoading && "Зарегестрироваться"}
+        <ClipLoader
+          color="#36d7b7" // Цвет спиннера
+          loading={isLoading} // Видимость контролируется пропсом loading
+          size={25} // Размер в px
+          aria-label="Загрузка" // Текст для скринридеров
+          data-testid="loader"
+        />
       </button>
     </form>
   );

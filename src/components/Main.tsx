@@ -18,7 +18,7 @@ function Main() {
           <button
             className={style.main_button}
             onClick={() => {
-              dispatch(setToggle());
+              dispatch(setToggle(false));
             }}
           >
             Войти
@@ -26,7 +26,7 @@ function Main() {
           <button
             className={style.main_button}
             onClick={() => {
-              dispatch(setToggle());
+              dispatch(setToggle(true));
             }}
           >
             Зарегистрироваться
