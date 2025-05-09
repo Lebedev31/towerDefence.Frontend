@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Auth, MessageRegistration } from "@/type/type";
+import { Auth, MessageAuth, MessageRegistration } from "@/type/type";
 
 export const authApiSlice = createApi({
   reducerPath: "authApi",
@@ -9,7 +9,7 @@ export const authApiSlice = createApi({
   }),
 
   endpoints: (builder) => ({
-    auth: builder.mutation<MessageRegistration, Auth>({
+    auth: builder.mutation<MessageAuth, Auth>({
       query: (data) => ({
         url: "/signIn",
         method: "POST",
@@ -24,11 +24,11 @@ export const authApiSlice = createApi({
             localStorage.setItem(keyToken, token);
           }
         } else {
-          const errorResponse = response as MessageRegistration;
+          const errorResponse = response as MessageAuth;
           errorResponse.message.success = false;
           return errorResponse;
         }
-        return response as MessageRegistration;
+        return response as MessageAuth;
       },
     }),
 
@@ -42,5 +42,3 @@ export const authApiSlice = createApi({
 });
 
 export const { useAuthMutation, useLogoutMutation } = authApiSlice;
-
-

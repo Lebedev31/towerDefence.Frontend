@@ -1,6 +1,19 @@
 import { io, Socket } from "socket.io-client";
 import { getToken } from "../function/deleteToken";
 
+export enum SocketBasikListener {
+  CONNECT = "connect",
+  DISCONNECT = "disconnect",
+  CONNECT_ERROR = "connect_error",
+  CONNECT_TIMEOUT = "connect_timeout",
+  ERROR = "error",
+}
+
+export enum SocketChatListener {
+  GETCHATLIST = "getChatList",
+  PESRSONALDATA = "personalData",
+}
+
 const path = process.env.NEXT_PUBLIC_BACKEND;
 let socket: Socket;
 export function startSocketClient(): Socket {
@@ -23,29 +36,29 @@ export function startSocketClient(): Socket {
 }
 
 export function socketConnect(socket: Socket): void {
-  socket.on("connect", () => {
+  socket.on(SocketBasikListener.CONNECT, () => {
     console.log("есть подключение к серверу");
   });
 }
 
 export function socketDisconnect(socket: Socket): void {
-  socket.on("disconnect", () => {
+  socket.on(SocketBasikListener.DISCONNECT, () => {
     console.log("клиент отключен от сервера");
   });
 }
 
 export function socketError(socket: Socket): void {
-  socket.on("connect_error", (error) => {
+  socket.on(SocketBasikListener.CONNECT_ERROR, (error) => {
     console.log(error.message);
   });
 
-  socket.on("connect_timeout", (error) => {
+  socket.on(SocketBasikListener.CONNECT_TIMEOUT, (error) => {
     if (error instanceof Error) {
       console.log(error.message);
     }
   });
 
-  socket.on("error", (error) => {
+  socket.on(SocketBasikListener.ERROR, (error) => {
     if (error instanceof Error) {
       console.log(error.message);
     }

@@ -14,6 +14,16 @@ export interface MessageRegistration {
   };
 }
 
+export interface MessageAuth {
+  message: {
+    success: boolean;
+    personalData: {
+      id: string;
+      name: string;
+    };
+  };
+}
+
 export interface ServerError {
   error: string;
   message: string;

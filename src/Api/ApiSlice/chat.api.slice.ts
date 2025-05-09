@@ -5,6 +5,8 @@ import {
   socketDisconnect,
   socketError,
 } from "../soket/soket"; // ваш клиент
+import { SocketChatListener } from "../soket/soket";
+import { RootState } from "../store";
 
 interface ChatUser {
   id: string;
@@ -22,28 +24,32 @@ export const chatApiSlice = createApi({
 
       async onCacheEntryAdded(
         _arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved, getState }
       ) {
         const socket = startSocketClient();
+        const state = getState() as RootState;
+        const payload = state.main.personalData;
         try {
           await cacheDataLoaded;
-          socketConnect(socket);
+          if (!socket.connected) socketConnect(socket);
 
-          socket.on("getChatList", (list: ChatUser[]) => {
-            console.log(45);
-            console.log(list);
+          socket.emit(SocketChatListener.PESRSONALDATA, payload);
+
+          socket.on(SocketChatListener.GETCHATLIST, (listUsers: ChatUser[]) => {
+            console.log(5);
+            updateCachedData((draft) => {
+              console.log(draft);
+              Object.assign(draft, listUsers);
+            });
           });
-
-          await cacheEntryRemoved;
-          socketDisconnect(socket);
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           socketError(socket);
         }
-      },
 
-      // (опционально) оставляем данные 20 секунд после закрытия
-      keepUnusedDataFor: 20,
+        await cacheEntryRemoved;
+        if (socket.connected) socketDisconnect(socket);
+      },
     }),
   }),
 });

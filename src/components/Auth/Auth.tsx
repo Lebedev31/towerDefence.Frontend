@@ -9,9 +9,13 @@ import { toast } from "react-toastify";
 import { rtkError } from "@/Api/function/errorFunction";
 import { ClipLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import { setPersonalData } from "@/Api/Slice/mainSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Api/store";
 
 export function Auth() {
   const [auth, { isLoading }] = useAuthMutation();
+  const dispath: AppDispatch = useDispatch();
   const router = useRouter();
   const {
     register,
@@ -25,7 +29,7 @@ export function Auth() {
       if (!response.message.success) {
         toast.error("Отсутсвует токен авторизации");
       } else {
-        console.log(5);
+        dispath(setPersonalData(response.message.personalData));
         router.push("/menu");
       }
     } catch (error) {

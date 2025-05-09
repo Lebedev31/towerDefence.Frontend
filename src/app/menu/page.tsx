@@ -6,15 +6,19 @@ import { useLogoutMutation } from "@/Api/ApiSlice/auth.api.slice";
 import { rtkError } from "@/Api/function/errorFunction";
 import { toast } from "react-toastify";
 import Chat from "@/components/Chat/Chat";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Api/store";
+import { clearPersonalData } from "@/Api/Slice/mainSlice";
 
 export default function Menu() {
   const [logout] = useLogoutMutation();
-
+  const dispatch: AppDispatch = useDispatch();
   async function logoutUser(): Promise<void> {
     try {
       const log = await logout().unwrap();
       if (log.message.success) {
         deleteToken();
+        dispatch(clearPersonalData());
         toast.info("Вы вышли из аккаунта");
       }
     } catch (error) {
