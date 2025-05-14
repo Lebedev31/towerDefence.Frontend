@@ -17,7 +17,7 @@ export const authApiSlice = createApi({
       }),
       transformResponse: (response, meta) => {
         const header = new Map(meta?.response?.headers);
-        const token = header.get("authorization")?.slice(6);
+        const token = header.get("authorization")?.slice(6).trim();
         if (token) {
           const keyToken = process.env.NEXT_PUBLIC_TOKEN_KEY;
           if (keyToken) {
@@ -37,6 +37,7 @@ export const authApiSlice = createApi({
         url: "/logout",
         method: "Post",
       }),
+      keepUnusedDataFor: 15,
     }),
   }),
 });

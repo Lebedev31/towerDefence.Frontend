@@ -16,16 +16,18 @@ export enum SocketChatListener {
 
 const path = process.env.NEXT_PUBLIC_BACKEND;
 let socket: Socket;
-export function startSocketClient(): Socket {
+export function startSocketClient(namespace: string): Socket {
   if (typeof window === "undefined") {
     throw new Error("сокет вызвался не на клиенте");
   }
   if (!socket) {
-    socket = io(path, {
+    console.log(`${path + namespace}`);
+    socket = io(`${path + namespace}`, {
       transports: ["websocket", "polling"],
       auth: {
         token: getToken(),
       },
+      autoConnect: false,
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
@@ -38,12 +40,6 @@ export function startSocketClient(): Socket {
 export function socketConnect(socket: Socket): void {
   socket.on(SocketBasikListener.CONNECT, () => {
     console.log("есть подключение к серверу");
-  });
-}
-
-export function socketDisconnect(socket: Socket): void {
-  socket.on(SocketBasikListener.DISCONNECT, () => {
-    console.log("клиент отключен от сервера");
   });
 }
 

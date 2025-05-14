@@ -1,12 +1,6 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  startSocketClient,
-  socketConnect,
-  socketDisconnect,
-  socketError,
-} from "../soket/soket"; // ваш клиент
+import { startSocketClient, socketConnect, socketError } from "../soket/soket"; // ваш клиент
 import { SocketChatListener } from "../soket/soket";
-import { RootState } from "../store";
 
 interface ChatUser {
   id: string;
@@ -21,34 +15,41 @@ export const chatApiSlice = createApi({
       async queryFn() {
         return { data: [] };
       },
-
+      keepUnusedDataFor: 0,
       async onCacheEntryAdded(
         _arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved, getState }
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
-        const socket = startSocketClient();
-        const state = getState() as RootState;
-        const payload = state.main.personalData;
+        const socket = startSocketClient("/chat");
         try {
           await cacheDataLoaded;
-          if (!socket.connected) socketConnect(socket);
-
-          socket.emit(SocketChatListener.PESRSONALDATA, payload);
+          if (!socket.connected) {
+            socket.connect();
+            socketConnect(socket);
+          }
+          socket.emit(SocketChatListener.PESRSONALDATA);
 
           socket.on(SocketChatListener.GETCHATLIST, (listUsers: ChatUser[]) => {
-            console.log(5);
-            updateCachedData((draft) => {
-              console.log(draft);
-              Object.assign(draft, listUsers);
-            });
+            if (Array.isArray(listUsers)) {
+              updateCachedData(() => {
+                return [...listUsers];
+              });
+            }
           });
+
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           socketError(socket);
         }
 
         await cacheEntryRemoved;
-        if (socket.connected) socketDisconnect(socket);
+        if (socket.connected) {
+          socket.disconnect();
+          socket.on("disconnect", () => {
+            console.log("отключение от сервера");
+            socket.off();
+          });
+        }
       },
     }),
   }),
