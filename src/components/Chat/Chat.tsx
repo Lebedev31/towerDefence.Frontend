@@ -14,7 +14,7 @@ export default function Chat() {
           <div className={styles.sections_wrapper}>
             <div className={styles.section}>
               {data &&
-                data.map((user) => <ChatUser key={user.id} name={user.name} />)}
+                data.map((user, id) => <ChatUser key={id} name={user.name} />)}
             </div>
           </div>
         </div>

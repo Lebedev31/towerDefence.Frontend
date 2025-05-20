@@ -1,5 +1,10 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import { startSocketClient, socketConnect, socketError } from "../soket/soket"; // ваш клиент
+import {
+  startSocketClient,
+  socketConnect,
+  socketError,
+  socketDisconnect,
+} from "../soket/soket"; // ваш клиент
 import { SocketChatListener } from "../soket/soket";
 
 interface ChatUser {
@@ -45,14 +50,44 @@ export const chatApiSlice = createApi({
         await cacheEntryRemoved;
         if (socket.connected) {
           socket.disconnect();
-          socket.on("disconnect", () => {
-            console.log("отключение от сервера");
-            socket.off();
+          socketDisconnect(socket);
+        }
+      },
+    }),
+
+    dialogueUser: builder.query({
+      async queryFn() {
+        return { data: [] };
+      },
+      keepUnusedDataFor: 0,
+      async onCacheEntryAdded(
+        _arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const socket = startSocketClient("/chat");
+        try {
+          await cacheDataLoaded;
+          if (!socket.connected) {
+            socket.connect();
+            socketConnect(socket);
+          }
+          socket.emit(SocketChatListener.STARTCHAT);
+          socket.on(SocketChatListener.STARTCHAT, () => {
+            console.log(233455);
           });
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+          socketError(socket);
+        }
+
+        await cacheEntryRemoved;
+        if (socket.connected) {
+          socket.disconnect();
+          socketDisconnect(socket);
         }
       },
     }),
   }),
 });
 
-export const { useGetChatUsersQuery } = chatApiSlice;
+export const { useGetChatUsersQuery, useLazyDialogueUserQuery } = chatApiSlice;

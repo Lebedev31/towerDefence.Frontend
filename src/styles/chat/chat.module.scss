@@ -31,14 +31,12 @@
 }
 
 .chat_content {
-  // Переименовано с chatContent
   display: flex;
   gap: 24px;
   flex-grow: 1; // Занимает оставшееся пространство
 }
 
 .online_users {
-  // Переименовано с onlineUsers
   flex: 1;
   background: #f7f7f7;
   border-radius: 8px;

@@ -11,6 +11,7 @@
   overflow: hidden;
   background-size: 100% 100%; /* По умолчанию */
   display: flex;
+  position: relative;
 
   .button_block {
     width: 60%;

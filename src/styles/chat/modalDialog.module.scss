@@ -1,0 +1,78 @@
+.modalDialog {
+  width: 350px;
+  height: 400px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  position: absolute;
+  top: 40%;
+  z-index: 10;
+  left: 40%;
+  transform: translate(-40%, -40%);
+}
+
+.modalDialog__header {
+  position: relative;
+  border-bottom: 1px solid #eee;
+}
+
+.modalDialog__title {
+  font-size: 18px;
+  text-align: left;
+  color: black;
+}
+
+.modalDialog__close {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modalDialog__content {
+  flex-grow: 1;
+  padding: 8px;
+  overflow-y: auto;
+  border-radius: 5px;
+  background-color: rgba(106, 87, 87, 0.3);
+}
+
+.modalDialog__footer {
+  padding: 8px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modalDialog__textarea {
+  width: 100%;
+  height: 60px;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  font-family: inherit;
+}
+
+.modalDialog__buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalDialog__button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0088cc;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}

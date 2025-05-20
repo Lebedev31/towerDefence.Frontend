@@ -12,6 +12,7 @@ export enum SocketBasikListener {
 export enum SocketChatListener {
   GETCHATLIST = "getChatList",
   PESRSONALDATA = "personalData",
+  STARTCHAT = "startChat",
 }
 
 const path = process.env.NEXT_PUBLIC_BACKEND;
@@ -21,7 +22,6 @@ export function startSocketClient(namespace: string): Socket {
     throw new Error("сокет вызвался не на клиенте");
   }
   if (!socket) {
-    console.log(`${path + namespace}`);
     socket = io(`${path + namespace}`, {
       transports: ["websocket", "polling"],
       auth: {
@@ -40,6 +40,13 @@ export function startSocketClient(namespace: string): Socket {
 export function socketConnect(socket: Socket): void {
   socket.on(SocketBasikListener.CONNECT, () => {
     console.log("есть подключение к серверу");
+  });
+}
+
+export function socketDisconnect(socket: Socket): void {
+  socket.on(SocketBasikListener.DISCONNECT, () => {
+    console.log("отключение от сервера");
+    socket.off();
   });
 }
 

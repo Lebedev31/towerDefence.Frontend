@@ -6,9 +6,13 @@ import { useLogoutMutation } from "@/Api/ApiSlice/auth.api.slice";
 import { rtkError } from "@/Api/function/errorFunction";
 import { toast } from "react-toastify";
 import Chat from "@/components/Chat/Chat";
+import ModalDialog from "@/components/Chat/ModalDialog";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Api/store";
 
 export default function Menu() {
   const [logout] = useLogoutMutation();
+  const isOpen = useSelector((state: RootState) => state.main.isOpen);
   async function logoutUser(): Promise<void> {
     deleteToken();
     try {
@@ -27,6 +31,7 @@ export default function Menu() {
         <div className={styles.button_block}>
           <button className={styles.button_item}>Личный кабинет</button>
           <button className={styles.button_item}>В Бой!</button>
+          {isOpen && <ModalDialog />}
           <Link href="/" className={styles.link}>
             {" "}
             <button onClick={() => logoutUser()} className={styles.button_item}>

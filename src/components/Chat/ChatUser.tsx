@@ -1,11 +1,17 @@
 import Image from "next/image";
 import styles from "@/styles/chat/chatUser.module.scss";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Api/store";
+import { setOpenModal } from "@/Api/Slice/mainSlice";
+import { useLazyDialogueUserQuery } from "@/Api/ApiSlice/chat.api.slice";
 
 interface ChatUserProps {
   name: string;
 }
 
 export default function ChatUser({ name }: ChatUserProps) {
+  const [trigger] = useLazyDialogueUserQuery();
+  const dispatch: AppDispatch = useDispatch();
   return (
     <div className={styles.user_container}>
       <div className={styles.user_avatar}>
@@ -18,7 +24,15 @@ export default function ChatUser({ name }: ChatUserProps) {
         />
       </div>
       <div className={styles.user_name}>{name}</div>
-      <button className={styles.message_button}>Написать пользователю</button>
+      <button
+        className={styles.message_button}
+        onClick={() => {
+          dispatch(setOpenModal(true));
+          trigger();
+        }}
+      >
+        Написать пользователю
+      </button>
     </div>
   );
 }
