@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Registration, MessageRegistration } from "@/type/type";
+import { Registration, MessageServer } from "@/type/type";
 
 export const registerApiSlice = createApi({
   reducerPath: "registerApi",
@@ -8,7 +8,7 @@ export const registerApiSlice = createApi({
     timeout: 6000,
   }),
   endpoints: (builder) => ({
-    registration: builder.mutation<MessageRegistration, Registration>({
+    registration: builder.mutation<MessageServer, Registration>({
       query: (newUser) => ({
         url: "auth/register",
         method: "POST",

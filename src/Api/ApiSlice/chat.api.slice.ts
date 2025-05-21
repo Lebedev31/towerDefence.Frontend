@@ -6,10 +6,18 @@ import {
   socketDisconnect,
 } from "../soket/soket"; // ваш клиент
 import { SocketChatListener } from "../soket/soket";
+import { MessageServer } from "@/type/type";
 
 interface ChatUser {
   id: string;
   name: string;
+}
+
+export interface MessageUser {
+  id: string;
+  message: string;
+  date: string;
+  isRead: boolean;
 }
 
 export const chatApiSlice = createApi({
@@ -55,13 +63,13 @@ export const chatApiSlice = createApi({
       },
     }),
 
-    dialogueUser: builder.query({
+    startChat: builder.query<MessageUser[], string>({
       async queryFn() {
         return { data: [] };
       },
       keepUnusedDataFor: 0,
       async onCacheEntryAdded(
-        _arg,
+        id,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         const socket = startSocketClient("/chat");
@@ -71,10 +79,47 @@ export const chatApiSlice = createApi({
             socket.connect();
             socketConnect(socket);
           }
-          socket.emit(SocketChatListener.STARTCHAT);
-          socket.on(SocketChatListener.STARTCHAT, () => {
-            console.log(233455);
-          });
+          socket.emit(SocketChatListener.STARTCHAT, { id });
+          socket.on(
+            SocketChatListener.GETCASHDIALOGUE,
+            (data: MessageUser[]) => {
+              console.log(data);
+              if (Array.isArray(data)) {
+                updateCachedData(() => {
+                  return [...data];
+                });
+              }
+            }
+          );
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+          socketError(socket);
+        }
+
+        await cacheEntryRemoved;
+        if (socket.connected) {
+          socket.disconnect();
+          socketDisconnect(socket);
+        }
+      },
+    }),
+
+    sendMessage: builder.mutation<MessageServer, MessageUser>({
+      async queryFn() {
+        return { data: { message: { success: true } } };
+      },
+      async onCacheEntryAdded(
+        message,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        { cacheEntryRemoved }
+      ) {
+        const socket = startSocketClient("/chat");
+        if (!socket.connected) {
+          socket.connect();
+          socketConnect(socket);
+        }
+        try {
+          socket.emit(SocketChatListener.SENDMESSAGE, { message });
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           socketError(socket);
@@ -90,4 +135,8 @@ export const chatApiSlice = createApi({
   }),
 });
 
-export const { useGetChatUsersQuery, useLazyDialogueUserQuery } = chatApiSlice;
+export const {
+  useGetChatUsersQuery,
+  useLazyStartChatQuery,
+  useSendMessageMutation,
+} = chatApiSlice;

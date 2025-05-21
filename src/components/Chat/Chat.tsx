@@ -5,6 +5,7 @@ import ChatUser from "./ChatUser";
 
 export default function Chat() {
   const { data } = useGetChatUsersQuery();
+  console.log(data);
   return (
     <div className={styles.chat_container}>
       <h2 className={styles.centered_title}>Глобальный чат</h2>
@@ -14,7 +15,9 @@ export default function Chat() {
           <div className={styles.sections_wrapper}>
             <div className={styles.section}>
               {data &&
-                data.map((user, id) => <ChatUser key={id} name={user.name} />)}
+                data.map((user, num) => (
+                  <ChatUser key={num} id={user.id} name={user.name} />
+                ))}
             </div>
           </div>
         </div>

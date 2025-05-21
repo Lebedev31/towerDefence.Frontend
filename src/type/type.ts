@@ -8,7 +8,7 @@ export interface Registration extends Auth {
   confirmPassword?: string;
 }
 
-export interface MessageRegistration {
+export interface MessageServer {
   message: {
     success: boolean;
   };

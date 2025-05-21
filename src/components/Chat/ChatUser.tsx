@@ -2,15 +2,16 @@ import Image from "next/image";
 import styles from "@/styles/chat/chatUser.module.scss";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Api/store";
-import { setOpenModal } from "@/Api/Slice/mainSlice";
-import { useLazyDialogueUserQuery } from "@/Api/ApiSlice/chat.api.slice";
+import { setOpenModal, setIdUser } from "@/Api/Slice/mainSlice";
+import { useLazyStartChatQuery } from "@/Api/ApiSlice/chat.api.slice";
 
 interface ChatUserProps {
   name: string;
+  id: string;
 }
 
-export default function ChatUser({ name }: ChatUserProps) {
-  const [trigger] = useLazyDialogueUserQuery();
+export default function ChatUser({ name, id }: ChatUserProps) {
+  const [trigger] = useLazyStartChatQuery();
   const dispatch: AppDispatch = useDispatch();
   return (
     <div className={styles.user_container}>
@@ -28,7 +29,8 @@ export default function ChatUser({ name }: ChatUserProps) {
         className={styles.message_button}
         onClick={() => {
           dispatch(setOpenModal(true));
-          trigger();
+          dispatch(setIdUser(id));
+          trigger(id);
         }}
       >
         Написать пользователю

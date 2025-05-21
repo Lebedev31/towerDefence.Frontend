@@ -13,6 +13,8 @@ export enum SocketChatListener {
   GETCHATLIST = "getChatList",
   PESRSONALDATA = "personalData",
   STARTCHAT = "startChat",
+  GETCASHDIALOGUE = "getCashDialogue",
+  SENDMESSAGE = "sendMessage",
 }
 
 const path = process.env.NEXT_PUBLIC_BACKEND;
