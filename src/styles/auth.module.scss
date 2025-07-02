@@ -1,0 +1,60 @@
+@use "./variables" as v;
+
+.auth_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.form_group {
+  width: 100%;
+}
+
+.form_input {
+  width: 100%;
+  padding: 12px;
+  background: v.$input-background;
+  border: 1px solid v.$white-transparent;
+  border-radius: 4px;
+  color: white;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+    background: v.$button-blue-transparent;
+    border-color: white;
+  }
+}
+
+.form_button {
+  padding: 12px;
+  background: v.$white-transparent;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: v.$button-blue-hover;
+  }
+
+  &:active {
+    background: v.$button-blue-active;
+    transform: scale(0.98);
+  }
+}
+
+.error_message {
+  color: red;
+  font-size: 16px;
+  margin-top: 4px;
+  padding-left: 3px;
+}

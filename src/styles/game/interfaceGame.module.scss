@@ -1,0 +1,37 @@
+@use "../variables" as v;
+
+.intefaceGame {
+  background: linear-gradient(
+    135deg,
+    rgba(168, 197, 22, 0.85) 0%,
+    rgba(143, 129, 90, 0.6) 50%,
+    rgba(114, 244, 27, 0.85) 100%
+  );
+  width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  height: 100px;
+  .intefaceGame__user {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .intefaceGame__name {
+      height: 100%;
+      .intefaceGame__typeGame__img {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .intefaceGame__tower {
+    width: 300px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}

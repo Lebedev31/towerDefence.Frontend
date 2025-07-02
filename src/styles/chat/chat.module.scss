@@ -1,0 +1,110 @@
+@use "../variables" as v;
+@use "../mixins.scss" as m;
+.chat_container {
+  // Переименовано с chatContainer
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Пример высоты, можно настроить
+  border: 1px solid #ccc; // Пример границы
+  padding: 24px;
+  color: black;
+  background: linear-gradient(
+    to left,
+    rgba(144, 238, 144, 0.8),
+    rgba(128, 128, 128, 0.5)
+  );
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.centered_title {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.centered_subtitle {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.chat_content {
+  display: flex;
+  gap: 24px;
+  flex-grow: 1; // Занимает оставшееся пространство
+}
+
+.online_users {
+  flex: 1;
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 16px;
+  border-right: 1px solid #eee;
+  overflow-y: auto; // Добавляем скролл, если список длинный
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.sections_header {
+  margin-bottom: 10px;
+}
+
+.sections_header_row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.sections_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.messages {
+  flex: 3;
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; // Добавляем скролл для сообщений
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .container_messages {
+    overflow: auto;
+    margin-bottom: 16px;
+    padding-right: 8px; // Отступ для скролла
+    height: 300px;
+  }
+  /* Стили для области сообщений */
+  .global_chat_textarea {
+    width: 100%;
+    color: black;
+    resize: none;
+    height: 80px;
+    border-radius: 2%;
+    margin-top: auto;
+    border: 1px solid v.$neon-blue;
+    margin-bottom: 4px;
+    padding: 10px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    .send_button {
+      @include m.neon-button;
+      background-color: v.$neon-blue;
+    }
+  }
+}

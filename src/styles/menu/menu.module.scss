@@ -1,0 +1,81 @@
+@use "../mixins.scss";
+@use "../variables" as v;
+
+.menu_wrapper {
+  height: 100vh;
+  width: 100%;
+  background-image: url("/assets/img/menu.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-color: v.$background-color;
+  overflow: hidden;
+  background-size: 100% 100%; /* По умолчанию */
+  display: flex;
+  position: relative;
+
+  .button_block {
+    width: 50%;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+
+    .link {
+      display: block;
+      width: 180px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button_item {
+      width: 180px;
+      margin: 15px auto;
+      cursor: pointer;
+      height: 45px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: linear-gradient(45deg, red, blue);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all 0.4s ease;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+  .chat_block {
+    width: 50%;
+    border-left: 10px;
+    background-color: white;
+    height: 100%;
+  }
+}

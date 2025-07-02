@@ -1,0 +1,56 @@
+@use "./mixins";
+@use "./variables" as v;
+
+.main_wrapper {
+  height: 100vh;
+  width: 100%;
+  background-image: url("/assets/img/main.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: v.$background-color;
+  @include mixins.flex-center;
+  overflow: hidden;
+  background-size: 100% 100%; /* По умолчанию */
+}
+
+.main_form {
+  width: 350px;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 100px;
+}
+
+.main_button_container {
+  display: flex;
+  gap: 0;
+  width: 100%;
+}
+
+.main_button {
+  flex: 1;
+  padding: 10px 15px;
+  background: v.$white-transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &:hover {
+    background: v.$button-blue-hover;
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background: v.$button-blue-active;
+  }
+}

@@ -1,0 +1,255 @@
+@use "../variables" as v;
+
+// Контейнер для панели уведомлений
+.notification_container {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 100;
+}
+
+// Компактная панель уведомлений
+.notification_panel {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: v.$dark-background;
+  border: 2px solid v.$neon-blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 v.$glow-strength-soft v.$neon-blue,
+    0 0 v.$glow-strength-medium rgba(v.$neon-blue, 0.7);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 v.$glow-strength-medium v.$neon-pink,
+      0 0 v.$glow-strength-hard rgba(v.$neon-pink, 0.7);
+    border-color: v.$neon-pink;
+  }
+  
+  &.blinking {
+    animation: blink 1s infinite alternate;
+  }
+}
+
+// Анимация мигания
+@keyframes blink {
+  0% {
+    box-shadow: 0 0 v.$glow-strength-soft v.$neon-blue,
+      0 0 v.$glow-strength-medium rgba(v.$neon-blue, 0.7);
+    border-color: v.$neon-blue;
+  }
+  100% {
+    box-shadow: 0 0 v.$glow-strength-medium v.$neon-pink,
+      0 0 v.$glow-strength-hard rgba(v.$neon-pink, 0.7);
+    border-color: v.$neon-pink;
+  }
+}
+
+// Иконка уведомления
+.notification_icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .icon {
+    font-size: 24px;
+    color: v.$light-text;
+  }
+}
+
+// Индикатор новых уведомлений
+.notification_badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: v.$neon-pink;
+  box-shadow: 0 0 v.$glow-strength-soft v.$neon-pink;
+}
+
+// Меню уведомлений
+.notification_menu {
+  width: 300px;
+  background-color: v.$dark-background;
+  border: 2px solid v.$neon-blue;
+  border-radius: 12px;
+  box-shadow: 0 0 v.$glow-strength-medium v.$neon-blue,
+    0 0 v.$glow-strength-hard rgba(v.$neon-blue, 0.7);
+  overflow: hidden;
+}
+
+// Заголовок меню
+.menu_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid v.$neon-blue;
+}
+
+// Вкладки
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab_button {
+  background: none;
+  border: none;
+  color: v.$light-text;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(v.$neon-blue, 0.2);
+  }
+  
+  &.active {
+    background-color: rgba(v.$neon-blue, 0.3);
+    box-shadow: 0 0 v.$glow-strength-soft v.$neon-blue;
+  }
+}
+
+// Кнопка закрытия
+.close_button {
+  background: none;
+  border: none;
+  color: v.$light-text;
+  font-size: 20px;
+  cursor: pointer;
+  
+  &:hover {
+    color: v.$neon-pink;
+  }
+}
+
+// Содержимое меню
+.menu_content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+// Стили для вкладки с уведомлениями
+.notification_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification_item {
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(v.$neon-blue, 0.3);
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(v.$neon-blue, 0.1);
+  }
+}
+
+.notification_text {
+  color: v.$light-text;
+  margin-bottom: 5px;
+}
+
+.notification_time {
+  color: rgba(v.$light-text, 0.7);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.notification_actions {
+  display: flex;
+  gap: 8px;
+}
+
+// Стили для вкладки с друзьями
+.friends_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.friend_item {
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(v.$neon-blue, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(v.$neon-blue, 0.1);
+  }
+}
+
+.friend_info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.friend_name {
+  color: v.$light-text;
+}
+
+.friend_actions {
+  display: flex;
+  gap: 8px;
+}
+
+.status_indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  
+  &.online {
+    background-color: #4CAF50;
+    box-shadow: 0 0 5px #4CAF50;
+  }
+  
+  &.offline {
+    background-color: #9E9E9E;
+  }
+}
+
+.action_button {
+  background-color: rgba(v.$neon-green, 0.3);
+  color: v.$light-text;
+  border: 1px solid v.$neon-green;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(v.$neon-green, 0.5);
+    box-shadow: 0 0 v.$glow-strength-soft v.$neon-green;
+  }
+  
+  &.remove_button {
+    background-color: rgba(v.$neon-pink, 0.3);
+    border-color: v.$neon-pink;
+    
+    &:hover {
+      background-color: rgba(v.$neon-pink, 0.5);
+      box-shadow: 0 0 v.$glow-strength-soft v.$neon-pink;
+    }
+  }
+}
+
+// Пустая вкладка
+.empty_tab {
+  padding: 20px;
+  text-align: center;
+  color: rgba(v.$light-text, 0.7);
+}

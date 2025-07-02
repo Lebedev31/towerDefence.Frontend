@@ -1,0 +1,44 @@
+@use "./variables" as v;
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin neon-button {
+  padding: 10px 20px;
+  border: 1px solid v.$neon-green;
+  border-radius: 8px;
+  background-color: transparent;
+  color: v.$neon-green;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 v.$glow-strength-soft v.$neon-green;
+  box-shadow: 0 0 v.$glow-strength-soft rgba(v.$neon-green, 0.5),
+    inset 0 0 v.$glow-strength-soft rgba(v.$neon-green, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(v.$neon-green, 0.2);
+    color: lighten(v.$neon-green, 10%);
+    border-color: lighten(v.$neon-green, 10%);
+    box-shadow: 0 0 v.$glow-strength-medium rgba(v.$neon-green, 0.7),
+      inset 0 0 v.$glow-strength-medium rgba(v.$neon-green, 0.5);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 0 v.$glow-strength-soft rgba(v.$neon-green, 0.5),
+      inset 0 0 v.$glow-strength-hard rgba(v.$neon-green, 0.7);
+  }
+}

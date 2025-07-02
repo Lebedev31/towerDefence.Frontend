@@ -1,0 +1,19 @@
+// Основные цвета
+$background-color: #f6ecec; // Темный фон
+$white: #e6e6e6; // Приглушенный белый
+
+// Прозрачные цвета
+$white-transparent: rgba(255, 255, 255, 0.1); // Более темная прозрачность
+$button-blue-transparent: rgba(41, 128, 185, 0.6); // Темный прозрачный синий
+$button-blue-hover: rgba(54, 115, 156, 0.9); // Усиленный синий при наведении
+$button-blue-active: rgba(7, 139, 226, 0.7); // Темный синий при нажатии
+$input-background: rgba(41, 128, 185, 0.1); // Темный фон для инпутов
+// Переменные для неоновой темы
+$neon-blue: #00ffd5;
+$neon-pink: #ff00ff;
+$neon-green: #796b1d;
+$dark-background: #1a1a2e; // Темно-синий/фиолетовый фон
+$light-text: #e0e0e0;
+$glow-strength-soft: 5px;
+$glow-strength-medium: 10px;
+$glow-strength-hard: 15px;

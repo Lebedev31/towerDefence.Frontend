@@ -1,0 +1,72 @@
+@use "../variables.scss" as v;
+
+.messageGlobal {
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+  min-height: 90px;
+
+  // Аватар
+  .messageGlobal__avatar {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .messageGlobal__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .messageGlobal__title {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: v.$dark-background;
+        margin: 0;
+      }
+    }
+  }
+
+  .messageGlobal__text {
+    line-height: 1.5;
+    color: v.$dark-background;
+    min-height: 60px;
+    overflow: hidden;
+    word-wrap: break-word;
+    img {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .messageGlobal__arrow {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .messageGlobal__expend {
+      color: v.$button-blue-active;
+      cursor: pointer;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    img:hover {
+      transform: scale(1.2);
+    }
+    .messageGlobal__grade {
+      display: flex;
+      align-items: center;
+      bottom: 8px;
+      justify-content: space-between;
+      width: 150px;
+      padding-left: 3px;
+      padding-right: 3px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+  }
+}

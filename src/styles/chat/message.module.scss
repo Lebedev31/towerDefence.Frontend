@@ -1,0 +1,56 @@
+// Файл: styles/chat/message.module.scss
+@use "../variables" as v;
+
+.messageContainer {
+  background-color: rgba(v.$dark-background, 0.7);
+  border: 1px solid v.$neon-blue;
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 v.$glow-strength-medium rgba(v.$neon-blue, 0.5),
+    0 0 v.$glow-strength-hard rgba(v.$neon-blue, 0.3),
+    inset 0 0 v.$glow-strength-soft rgba(v.$neon-blue, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 v.$glow-strength-medium rgba(v.$neon-pink, 0.6),
+      0 0 v.$glow-strength-hard rgba(v.$neon-pink, 0.4),
+      inset 0 0 v.$glow-strength-soft rgba(v.$neon-pink, 0.3);
+    border-color: v.$neon-pink;
+  }
+}
+
+.messageText {
+  color: v.$light-text;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+  text-shadow: 0 0 v.$glow-strength-soft v.$neon-green,
+    0 0 v.$glow-strength-medium rgba(v.$neon-green, 0.7);
+  word-wrap: break-word;
+}
+
+.messageTextOpponent {
+  color: v.$light-text;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+  text-shadow: 0 0 v.$glow-strength-soft v.$neon-pink,
+    0 0 v.$glow-strength-medium rgba(v.$neon-pink, 0.7);
+  word-wrap: break-word;
+}
+
+.messageDate {
+  color: v.$neon-blue;
+  font-size: 0.75rem;
+  text-align: right;
+  display: block;
+  text-shadow: 0 0 v.$glow-strength-soft rgba(v.$neon-blue, 0.8);
+}
+
+// Стили для прочитанных/непрочитанных, если понадобятся
+.unread {
+  // border-left: 3px solid v.$neon-green;
+}
+
+.read {
+  // opacity: 0.8;
+}
