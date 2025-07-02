@@ -1,13 +1,11 @@
 "use client";
 import { useEffect, useRef } from "react";
-import styles from "@/styles/game/game.module.scss";
 import InterfaceGame from "./InterfaceGame/InterfaceGame";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useTowerDropHook } from "./Hooks/useTowerDropHook";
 
 function FigureWarsGame() {
   const gameRef = useRef(null);
-
+  const drop = useTowerDropHook();
   useEffect(() => {
     if (!gameRef.current) return;
 
@@ -47,10 +45,15 @@ function FigureWarsGame() {
 
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
-        <div ref={gameRef} className={styles.game}></div>
-        <InterfaceGame />
-      </DndProvider>
+      <div
+        ref={(el) => {
+          if (el) drop(el);
+        }}
+      >
+        <div ref={gameRef}></div>
+      </div>
+
+      <InterfaceGame />
     </>
   );
 }

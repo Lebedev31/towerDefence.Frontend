@@ -2,6 +2,7 @@ import styles from "@/styles/game/interfaceGame.module.scss";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Api/store";
+import DragTower from "./DragTower";
 
 function InterfaceGame() {
   const typeGame = useSelector((state: RootState) => state.mainGame.typeGame);
@@ -31,20 +32,8 @@ function InterfaceGame() {
         </div>
       </div>
       <div className={styles.intefaceGame__tower}>
-        <Image
-          style={{ cursor: "pointer" }}
-          width={50}
-          height={50}
-          alt="башня"
-          src={"/assets/imgGame/магическаяБезФона1.png"}
-        />
-        <Image
-          style={{ cursor: "pointer" }}
-          width={50}
-          height={50}
-          alt="башня"
-          src={"/assets/imgGame/стрелковаяБезФона1.png"}
-        />
+        <DragTower pathImg="/assets/imgGame/магическаяБезФона1.png" />
+        <DragTower pathImg="/assets/imgGame/стрелковаяБезФона1.png" />
       </div>
     </div>
   );

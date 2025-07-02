@@ -1,11 +1,13 @@
 import * as Phaser from "phaser";
 import { makeStore } from "@/Api/store";
 import { SupportCreate } from "./supportCreateClass";
+import { SupportUpdate } from "./supportUpdateClass";
 
 const typeGame = makeStore().getState().mainGame.typeGame; // оборона или атака
 
 export class MainScene extends Phaser.Scene {
   supportCreate!: SupportCreate;
+  supportUpdate!: SupportUpdate;
   constructor() {
     super("MainScene");
   }
@@ -13,6 +15,7 @@ export class MainScene extends Phaser.Scene {
   init(): void {
     // Создаем экземпляр помощника и передаем ему эту сцену (`this`)
     this.supportCreate = new SupportCreate(this);
+    this.supportUpdate = new SupportUpdate(this);
   }
 
   preload(): void {
