@@ -54,3 +54,48 @@ export interface PushGlobalMessage {
   answers?: string;
   parentId?: string;
 }
+
+// пропс который передается из драг в дроп при переносе башни
+
+export type DragProps = {
+  nameImg: string;
+};
+
+// enum стелковых башен
+
+export enum RifleTowers {
+  RegularShootingTower = "regularShootingTower",
+}
+
+export enum RifleTowersPatch {
+  RegularShootingTowerPatch = "/assets/imgGame/стрелковаяБезФона1.png",
+}
+
+// enum магческих башен
+
+export enum MagicTowers {
+  RegularMagicTower = "regularMagicTower",
+}
+
+export enum MagicTowersPatch {
+  RegularMagicTowerPatch = "/assets/imgGame/магическаяБезФона1.png",
+}
+
+// enum артилерийских башен
+
+export enum ArtilleryTowers {
+  RegularArtilleryTower = "regularArtileryTower",
+  RocketLauncherTower = "rocketLauncherTower",
+}
+
+export enum ArtilleryTowersPatch {
+  RegularArtilleryTowerPatch = "/assets/imgGame/орудийнаяБезФона1.png",
+  RocketLauncherTowerPatch = "/assets/imgGame/ракетницаБезФона2 (1) (1).jpg",
+}
+
+// тип координат
+export type CoordinatesTower = {
+  x: number;
+  y: number;
+  pathImg: string;
+};

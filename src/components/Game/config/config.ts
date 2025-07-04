@@ -9,6 +9,7 @@ export const config = (
     height: 530,
     type: Phaser.AUTO,
     parent,
+    //  pixelArt: true,
     scene: MainScene,
     physics: {
       default: "arcade",

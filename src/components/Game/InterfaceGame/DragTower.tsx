@@ -3,11 +3,12 @@ import { useDrag } from "react-dnd";
 
 type PropsDragTower = {
   pathImg: string;
+  nameImg: string;
 };
-function DragTower({ pathImg }: PropsDragTower) {
+function DragTower({ pathImg, nameImg }: PropsDragTower) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "tower",
-    item: { image: pathImg }, // Передаем данные о типе башни и ее изображении
+    item: { nameImg }, // Передаем данные о типе башни и ее изображении
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

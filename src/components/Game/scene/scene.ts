@@ -1,35 +1,58 @@
 import * as Phaser from "phaser";
-import { makeStore } from "@/Api/store";
 import { SupportCreate } from "./supportCreateClass";
 import { SupportUpdate } from "./supportUpdateClass";
-
-const typeGame = makeStore().getState().mainGame.typeGame; // оборона или атака
+import {
+  RifleTowers,
+  MagicTowers,
+  RifleTowersPatch,
+  MagicTowersPatch,
+  ArtilleryTowers,
+  ArtilleryTowersPatch,
+} from "@/type/type";
 
 export class MainScene extends Phaser.Scene {
   supportCreate!: SupportCreate;
   supportUpdate!: SupportUpdate;
+
   constructor() {
     super("MainScene");
   }
 
   init(): void {
-    // Создаем экземпляр помощника и передаем ему эту сцену (`this`)
+    // Создаем экземпляры классов-помощников
     this.supportCreate = new SupportCreate(this);
     this.supportUpdate = new SupportUpdate(this);
   }
 
   preload(): void {
-    // Загрузка ассетов
+    // Загрузка всех необходимых ассетов
     this.load.image("startMap", "assets/imgGame/карта.png");
+    this.load.image(
+      RifleTowers.RegularShootingTower,
+      RifleTowersPatch.RegularShootingTowerPatch
+    );
+    this.load.image(
+      MagicTowers.RegularMagicTower,
+      MagicTowersPatch.RegularMagicTowerPatch
+    );
+    this.load.image(
+      ArtilleryTowers.RegularArtilleryTower,
+      ArtilleryTowersPatch.RegularArtilleryTowerPatch
+    );
+    this.load.image(
+      ArtilleryTowers.RocketLauncherTower,
+      ArtilleryTowersPatch.RocketLauncherTowerPatch
+    );
   }
 
   create(): void {
-    //создание карты
-    this.supportCreate.createMap();
-    this.supportCreate.createLine();
+    // Создание игровых объектов
+    this.supportCreate.createMap(); // загрузка карты
+    this.supportCreate.createLine(); // линии для разработки
+    this.supportCreate.supportTower.subscribeCoordinates(); // вычисление координатов башни
   }
 
-  update(): void {
-    // Логика обновления
+  update(time: number, delta: number): void {
+    // Ваша логика обновления, которая выполняется каждый кадр
   }
 }

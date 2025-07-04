@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CoordinatesTower } from "@/type/type";
 
 export type TypeGame = "defence" | "attack";
-export type CoordinatesTower = {
-  x: number;
-  y: number;
-  path: string;
-};
 
 export interface MainGameInitialState {
   typeGame: TypeGame;
-  coordinatesTower?: CoordinatesTower;
+  coordinatesTower: CoordinatesTower | undefined;
 }
 
 const initialState: MainGameInitialState = {
   typeGame: "defence",
+  coordinatesTower: undefined,
+  // checkLeftMouseUp: false,
 };
 
 export const mainGameSlice = createSlice({
@@ -24,11 +22,15 @@ export const mainGameSlice = createSlice({
       state.typeGame = action.payload;
     },
 
-    coordinatesTower: (state, action: PayloadAction<CoordinatesTower>) => {
+    setCoordinatesTower: (state, action: PayloadAction<CoordinatesTower>) => {
       state.coordinatesTower = action.payload;
+    },
+
+    clearCoordinatesTower: (state) => {
+      state.coordinatesTower = undefined;
     },
   },
 });
 
-export const { setTypeGame } = mainGameSlice.actions;
+export const { setTypeGame, setCoordinatesTower } = mainGameSlice.actions;
 export default mainGameSlice.reducer;

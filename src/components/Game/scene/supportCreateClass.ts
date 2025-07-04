@@ -1,19 +1,13 @@
 import * as Phaser from "phaser";
+import { SupportSceneAbctract } from "./abstractScene";
+import { SupportTower } from "../Tower/supportTowerClass";
 
-export class SupportCreate {
-  private scene: Phaser.Scene;
-  private width: number;
-  private height: number;
-  private field: number[][];
-
+export class SupportCreate extends SupportSceneAbctract {
   // Мы передаем настоящую сцену в конструктор
+  supportTower: SupportTower;
   constructor(scene: Phaser.Scene) {
-    this.scene = scene;
-    this.width = this.scene.sys.game.config.width as number;
-    this.height = this.scene.sys.game.config.height as number;
-    this.field = Array.from({ length: 10 }, () =>
-      Array.from({ length: 25 }, (_, index) => index + 1)
-    );
+    super(scene);
+    this.supportTower = new SupportTower(scene);
   }
 
   createMap() {

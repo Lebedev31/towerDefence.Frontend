@@ -44,7 +44,7 @@ function FigureWarsGame() {
   }, []);
 
   return (
-    <>
+    <div>
       <div
         ref={(el) => {
           if (el) drop(el);
@@ -54,7 +54,7 @@ function FigureWarsGame() {
       </div>
 
       <InterfaceGame />
-    </>
+    </div>
   );
 }
 

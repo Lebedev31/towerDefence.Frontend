@@ -3,6 +3,14 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Api/store";
 import DragTower from "./DragTower";
+import {
+  RifleTowersPatch,
+  MagicTowersPatch,
+  ArtilleryTowersPatch,
+  RifleTowers,
+  MagicTowers,
+  ArtilleryTowers,
+} from "@/type/type";
 
 function InterfaceGame() {
   const typeGame = useSelector((state: RootState) => state.mainGame.typeGame);
@@ -32,8 +40,22 @@ function InterfaceGame() {
         </div>
       </div>
       <div className={styles.intefaceGame__tower}>
-        <DragTower pathImg="/assets/imgGame/магическаяБезФона1.png" />
-        <DragTower pathImg="/assets/imgGame/стрелковаяБезФона1.png" />
+        <DragTower
+          pathImg={RifleTowersPatch.RegularShootingTowerPatch}
+          nameImg={RifleTowers.RegularShootingTower}
+        />
+        <DragTower
+          pathImg={MagicTowersPatch.RegularMagicTowerPatch}
+          nameImg={MagicTowers.RegularMagicTower}
+        />
+        <DragTower
+          pathImg={ArtilleryTowersPatch.RegularArtilleryTowerPatch}
+          nameImg={ArtilleryTowers.RegularArtilleryTower}
+        />
+        <DragTower
+          pathImg={ArtilleryTowersPatch.RocketLauncherTowerPatch}
+          nameImg={ArtilleryTowers.RocketLauncherTower}
+        />
       </div>
     </div>
   );
