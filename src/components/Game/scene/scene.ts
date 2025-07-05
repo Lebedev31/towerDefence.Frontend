@@ -1,6 +1,7 @@
 import * as Phaser from "phaser";
 import { SupportCreate } from "./supportCreateClass";
 import { SupportUpdate } from "./supportUpdateClass";
+import { BasicTower } from "../Tower/basicTower";
 import {
   RifleTowers,
   MagicTowers,
@@ -13,6 +14,7 @@ import {
 export class MainScene extends Phaser.Scene {
   supportCreate!: SupportCreate;
   supportUpdate!: SupportUpdate;
+  basicTower!: BasicTower;
 
   constructor() {
     super("MainScene");
@@ -22,6 +24,7 @@ export class MainScene extends Phaser.Scene {
     // Создаем экземпляры классов-помощников
     this.supportCreate = new SupportCreate(this);
     this.supportUpdate = new SupportUpdate(this);
+    //this.basicTower = new BasicTower(this);
   }
 
   preload(): void {
@@ -48,8 +51,7 @@ export class MainScene extends Phaser.Scene {
   create(): void {
     // Создание игровых объектов
     this.supportCreate.createMap(); // загрузка карты
-    this.supportCreate.createLine(); // линии для разработки
-    this.supportCreate.supportTower.subscribeCoordinates(); // вычисление координатов башни
+    this.supportCreate.towersInit();
   }
 
   update(time: number, delta: number): void {

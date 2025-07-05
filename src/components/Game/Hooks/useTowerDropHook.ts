@@ -10,7 +10,6 @@ export function useTowerDropHook(): ConnectDropTarget {
     accept: "tower", // Принимаем все типы из ItemTypes
     drop: (item: DragProps, monitor) => {
       // Это событие срабатывает, когда элемент "брошен" над этой областью
-      console.log(item);
       const clientOffset = monitor.getClientOffset(); // Координаты курсора относительно окна браузера
       if (clientOffset) {
         const coordinates: CoordinatesTower = {

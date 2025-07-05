@@ -1,4 +1,5 @@
 import * as Phaser from "phaser";
+import { deathZones } from "../config/deatZone";
 
 export type FieldCell = {
   x1: number;
@@ -7,6 +8,8 @@ export type FieldCell = {
   y2: number;
   cellX: number; // номер по x (от 1 до 25)
   cellY: number; // номер по y (от 1 до 10)
+  gameObject?: "tower" | "generator";
+  deathZone: boolean;
 };
 
 export abstract class SupportSceneAbctract {
@@ -31,6 +34,7 @@ export abstract class SupportSceneAbctract {
         y2: (y + 1) * cellHeight,
         cellX: x,
         cellY: y,
+        deathZone: deathZones.some((item) => item.row === y && item.line === x),
       }))
     );
   }

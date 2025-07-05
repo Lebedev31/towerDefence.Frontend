@@ -68,7 +68,7 @@ export enum RifleTowers {
 }
 
 export enum RifleTowersPatch {
-  RegularShootingTowerPatch = "/assets/imgGame/стрелковаяБезФона1.png",
+  RegularShootingTowerPatch = "/assets/imgGame/стрелковая.png",
 }
 
 // enum магческих башен
@@ -78,7 +78,7 @@ export enum MagicTowers {
 }
 
 export enum MagicTowersPatch {
-  RegularMagicTowerPatch = "/assets/imgGame/магическаяБезФона1.png",
+  RegularMagicTowerPatch = "/assets/imgGame/магическая.png",
 }
 
 // enum артилерийских башен
@@ -89,8 +89,8 @@ export enum ArtilleryTowers {
 }
 
 export enum ArtilleryTowersPatch {
-  RegularArtilleryTowerPatch = "/assets/imgGame/орудийнаяБезФона1.png",
-  RocketLauncherTowerPatch = "/assets/imgGame/ракетницаБезФона2 (1) (1).jpg",
+  RegularArtilleryTowerPatch = "/assets/imgGame/артилерия.png",
+  RocketLauncherTowerPatch = "/assets/imgGame/ракетница.png",
 }
 
 // тип координат
