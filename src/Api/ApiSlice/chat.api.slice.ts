@@ -8,7 +8,6 @@ import {
 import { SocketChatListener } from "../soket/soket";
 import { MessageServer } from "@/type/type";
 
-
 interface ChatUser {
   id: string;
   name: string;
@@ -21,12 +20,11 @@ export interface MessageUser {
   isRead: boolean;
 }
 
-
 export const chatApiSlice = createApi({
   reducerPath: "chatApi",
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
-    getChatUsers: builder.query < ChatUser[], void> ({
+    getChatUsers: builder.query<ChatUser[], void>({
       async queryFn() {
         return { data: [] };
       },
@@ -65,12 +63,15 @@ export const chatApiSlice = createApi({
       },
     }),
 
-    startChat: builder.query < MessageUser[], string> ({
+    startChat: builder.query<MessageUser[], string>({
       async queryFn() {
         return { data: [] };
       },
       keepUnusedDataFor: 0,
-      async onCacheEntryAdded(id, { updateCachedData, cacheDataLoaded }) {
+      async onCacheEntryAdded(
+        id,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
         const socket = startSocketClient("/chat");
         try {
           await cacheDataLoaded;
@@ -94,10 +95,12 @@ export const chatApiSlice = createApi({
         } catch (error) {
           socketError(socket);
         }
+
+        await cacheEntryRemoved;
       },
     }),
 
-    sendMessage: builder.mutation < MessageServer, MessageUser> ({
+    sendMessage: builder.mutation<MessageServer, MessageUser>({
       async queryFn(message) {
         const socket = startSocketClient("/chat");
         if (!socket.connected) {

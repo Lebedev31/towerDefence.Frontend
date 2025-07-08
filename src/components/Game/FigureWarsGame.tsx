@@ -2,10 +2,12 @@
 import { useEffect, useRef } from "react";
 import InterfaceGame from "./InterfaceGame/InterfaceGame";
 import { useTowerDropHook } from "./Hooks/useTowerDropHook";
+import useSocketGameAdapter from "./Hooks/socketGameAdapter";
 
 function FigureWarsGame() {
   const gameRef = useRef(null);
   const drop = useTowerDropHook();
+  const socketGame = useSocketGameAdapter(gameRef);
   useEffect(() => {
     if (!gameRef.current) return;
 

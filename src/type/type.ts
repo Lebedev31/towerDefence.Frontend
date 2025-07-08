@@ -99,3 +99,14 @@ export type CoordinatesTower = {
   y: number;
   pathImg: string;
 };
+
+// enum для героев обороны
+export enum HeroesDefence {
+  SolarKnight = "solarKnight",
+}
+
+// enum путей для героев обороны
+
+export enum HeroesDefencePatch {
+  KnightPatch = "assept/imgGame/ГеройПирожок.png",
+}

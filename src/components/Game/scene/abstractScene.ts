@@ -13,7 +13,7 @@ export type FieldCell = {
 };
 
 export abstract class SupportSceneAbctract {
-  protected field!: FieldCell[][];
+  public field!: FieldCell[][];
   protected width!: number;
   protected height!: number;
   protected scene!: Phaser.Scene;

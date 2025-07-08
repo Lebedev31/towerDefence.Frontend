@@ -15,7 +15,7 @@ import {
   characteristicsRocketLauncherTower,
 } from "./configTowers";
 
-type SquareTower = {
+export type SquareTower = {
   row: number;
   line: number;
   nameImg: string;
@@ -58,6 +58,7 @@ export class TowerManager extends SupportSceneAbctract {
   private squareCalculationTower(
     coord: CoordinatesTower
   ): SquareTower | undefined {
+    console.log(this.towers);
     const foundSquare = this.field
       .flatMap((rowItems) => {
         return rowItems.flatMap((item) => {
@@ -109,9 +110,10 @@ export class TowerManager extends SupportSceneAbctract {
           this.scene,
           info.x,
           info.y,
-          calc.nameImg,
+          calc,
           info.square,
-          characteristicsRifleTower
+          characteristicsRifleTower,
+          this
         );
         this.towers.push(rifleTower);
         break;
@@ -120,9 +122,10 @@ export class TowerManager extends SupportSceneAbctract {
           this.scene,
           info.x,
           info.y,
-          calc.nameImg,
+          calc,
           info.square,
-          characteristicsMagicTower
+          characteristicsMagicTower,
+          this
         );
         this.towers.push(magicTower);
         break;
@@ -131,9 +134,10 @@ export class TowerManager extends SupportSceneAbctract {
           this.scene,
           info.x,
           info.y,
-          calc.nameImg,
+          calc,
           info.square,
-          characteristicsArtilleryTower
+          characteristicsArtilleryTower,
+          this
         );
         this.towers.push(artilleryTower);
         break;
@@ -142,9 +146,10 @@ export class TowerManager extends SupportSceneAbctract {
           this.scene,
           info.x,
           info.y,
-          calc.nameImg,
+          calc,
           info.square,
-          characteristicsRocketLauncherTower
+          characteristicsRocketLauncherTower,
+          this
         );
         this.towers.push(rocketLauncherTower);
         break;

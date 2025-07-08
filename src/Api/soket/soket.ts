@@ -28,26 +28,43 @@ export enum SocketGlobalChatListiner {
   SENDMESSAGEGLOBAL = "sendMessageGlobal",
 }
 
+export enum SocketGameListiner {
+  TypeGame = "typeGame",
+  SendConfigGame = "sendConfigGame",
+}
+
 const path = process.env.NEXT_PUBLIC_BACKEND;
 let socket: Socket;
+
+const socketInstances: Map<string, Socket> = new Map();
+
 export function startSocketClient(namespace: string): Socket {
   if (typeof window === "undefined") {
     throw new Error("сокет вызвался не на клиенте");
   }
-  if (!socket) {
-    socket = io(`${path + namespace}`, {
-      transports: ["websocket", "polling"],
-      auth: {
-        token: getToken(),
-      },
-      autoConnect: false,
-      reconnection: true,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      reconnectionAttempts: 5,
-    });
+
+  // Если сокет для данного неймспейса уже существует, возвращаем его
+  if (socketInstances.has(namespace)) {
+    return socketInstances.get(namespace)!;
   }
-  return socket;
+
+  // Иначе, создаем новый экземпляр сокета для этого неймспейса
+  const newSocket = io(`${path + namespace}`, {
+    transports: ["websocket", "polling"],
+    auth: {
+      token: getToken(),
+    },
+    autoConnect: false, // Оставляем false, чтобы управлять подключением вручную
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: 5,
+  });
+
+  // Сохраняем новый экземпляр сокета в Map
+  socketInstances.set(namespace, newSocket);
+
+  return newSocket;
 }
 
 export function socketConnect(socket: Socket): void {
@@ -64,6 +81,7 @@ export function socketDisconnect(socket: Socket): void {
 }
 
 export function socketError(socket: Socket): void {
+  console.log(socket);
   socket.on(SocketBasikListener.CONNECT_ERROR, (error) => {
     console.log(error.message);
   });

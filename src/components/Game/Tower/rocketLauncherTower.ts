@@ -1,17 +1,18 @@
-import { ArtilleryTower } from "./artilleryTower";
 import * as Phaser from "phaser";
 import { FieldCell } from "../scene/abstractScene";
-import { Characteristics } from "./basicTower";
+import { BasicTower, Characteristics } from "./basicTower";
+import { SquareTower, TowerManager } from "./towerManager";
 
-export class RocketLauncherTower extends ArtilleryTower {
+export class RocketLauncherTower extends BasicTower {
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
-    name: string,
+    calc: SquareTower,
     square: FieldCell,
-    characteristics: Characteristics
+    characteristics: Characteristics,
+    manager: TowerManager
   ) {
-    super(scene, x, y, name, square, characteristics);
+    super(scene, x, y, calc, square, characteristics, manager);
   }
 }
