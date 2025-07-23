@@ -8,6 +8,7 @@ import { notifitionsApiSlice } from "./ApiSlice/notification.api.slice";
 import { globalChatApi } from "./ApiSlice/global.api.chats.slice";
 import mainGameReduser from "./Slice/mainGameSlice";
 import { socketMiddleware } from "./middleware";
+import { gameApiSlice } from "./ApiSlice/game.api.slice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     [friendsApiSlice.reducerPath]: friendsApiSlice.reducer,
     [notifitionsApiSlice.reducerPath]: notifitionsApiSlice.reducer,
     [globalChatApi.reducerPath]: globalChatApi.reducer,
+    [gameApiSlice.reducerPath]: gameApiSlice.reducer,
     mainGame: mainGameReduser,
   },
 
@@ -29,6 +31,7 @@ export const store = configureStore({
       friendsApiSlice.middleware,
       notifitionsApiSlice.middleware,
       globalChatApi.middleware,
+      gameApiSlice.middleware,
       socketMiddleware
     ),
 });

@@ -38,7 +38,9 @@ export default function Menu() {
       <div className={styles.menu_wrapper}>
         <div className={styles.button_block}>
           <button className={styles.button_item}>Личный кабинет</button>
-          <button className={styles.button_item}>В Бой!</button>
+          <Link href="/preload" className={styles.link}>
+            <button className={styles.button_item}>В Бой!</button>
+          </Link>
           {isOpen && <ModalDialog />}
           <Link href="/" className={styles.link}>
             {" "}

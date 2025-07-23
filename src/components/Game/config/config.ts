@@ -5,12 +5,11 @@ export const config = (
   parent: HTMLDivElement
 ): Phaser.Types.Core.GameConfig => {
   return {
-    width: 1350,
-    height: 530,
     type: Phaser.AUTO,
     parent,
-    //  pixelArt: true,
     scene: MainScene,
+    width: 1500,
+    height: 600,
     physics: {
       default: "arcade",
       arcade: {

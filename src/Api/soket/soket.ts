@@ -31,6 +31,8 @@ export enum SocketGlobalChatListiner {
 export enum SocketGameListiner {
   TypeGame = "typeGame",
   SendConfigGame = "sendConfigGame",
+  CreateGameObject = "createGameObject",
+  SendGameObject = "sendGameObject",
 }
 
 const path = process.env.NEXT_PUBLIC_BACKEND;
@@ -69,7 +71,7 @@ export function startSocketClient(namespace: string): Socket {
 
 export function socketConnect(socket: Socket): void {
   socket.on(SocketBasikListener.CONNECT, () => {
-    console.log("есть подключение к серверу");
+    console.log(`есть подключение к серверу`);
   });
 }
 
@@ -81,7 +83,6 @@ export function socketDisconnect(socket: Socket): void {
 }
 
 export function socketError(socket: Socket): void {
-  console.log(socket);
   socket.on(SocketBasikListener.CONNECT_ERROR, (error) => {
     console.log(error.message);
   });

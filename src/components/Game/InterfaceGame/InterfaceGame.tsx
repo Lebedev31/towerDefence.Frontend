@@ -4,16 +4,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/Api/store";
 import DragTower from "./DragTower";
 import {
-  RifleTowersPatch,
-  MagicTowersPatch,
-  ArtilleryTowersPatch,
   RifleTowers,
   MagicTowers,
   ArtilleryTowers,
-} from "@/type/type";
+  RifleTowersPatch,
+  MagicTowersPatch,
+  ArtilleryTowersPatch,
+} from "@/type/towerTypes";
 
 function InterfaceGame() {
-  const typeGame = useSelector((state: RootState) => state.mainGame.typeGame);
+  const typeGame = useSelector((state: RootState) => state.mainGame.game);
   return (
     <div className={styles.intefaceGame}>
       <div className={styles.intefaceGame__user}>

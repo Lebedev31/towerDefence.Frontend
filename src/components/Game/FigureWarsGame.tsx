@@ -1,46 +1,69 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useRef } from "react";
 import InterfaceGame from "./InterfaceGame/InterfaceGame";
 import { useTowerDropHook } from "./Hooks/useTowerDropHook";
-import useSocketGameAdapter from "./Hooks/socketGameAdapter";
+import type PhaserType from "phaser";
+import { useProccesingSocketGameEventQuery } from "@/Api/ApiSlice/game.api.slice";
+import styles from "@/styles/game/game.module.scss";
+import { TowerMenu } from "./InterfaceGame/TowerMenu";
 
-function FigureWarsGame() {
-  const gameRef = useRef(null);
+export default function FigureWarsGame() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  useProccesingSocketGameEventQuery();
+  // Хранилище для игры: undefined — ещё не инициализировали,
+  // "loading" — идёт импорт/инициализация,
+  // иначе — реальный экземпляр Phaser.Game
+  const gameInstanceRef = useRef<PhaserType.Game | "loading" | undefined>(
+    undefined
+  );
+
   const drop = useTowerDropHook();
-  const socketGame = useSocketGameAdapter(gameRef);
-  useEffect(() => {
-    if (!gameRef.current) return;
 
-    const loadGame = async () => {
+  useEffect(() => {
+    let destroyFn: (() => void) | null = null;
+
+    const initPhaser = async () => {
+      if (!containerRef.current) return;
+
+      // Если уже есть либо в процессе загрузки ("loading"), либо готовый экземпляр — не создаём заново
+      if (gameInstanceRef.current !== undefined) {
+        return;
+      }
+
+      // Резервируем слот, чтобы второй вызов initPhaser не прошёл
+      gameInstanceRef.current = "loading";
+
       try {
-        // Динамический импорт Phaser только на клиенте
         const Phaser = await import("phaser");
         const { config } = await import("./config/config");
 
-        if (gameRef.current) {
-          const gameConfig = config(gameRef.current);
-          const game = new Phaser.Game(gameConfig);
+        // Настраиваем и создаём игру
+        const gameConfig = config(containerRef.current);
+        const game = new Phaser.Game(gameConfig);
 
-          // Cleanup функция
-          return () => {
-            game.destroy(true);
-          };
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки игры:", error);
+        // Сохраняем реальный экземпляр
+        gameInstanceRef.current = game;
+
+        // Задаём функцию уничтожения
+        destroyFn = () => {
+          console.log("Cleaning up Phaser game instance");
+          game.destroy(true);
+          gameInstanceRef.current = undefined;
+        };
+      } catch (err) {
+        console.error("Ошибка загрузки игры:", err);
+        // если что-то пошло не так, сбросим реф, чтобы можно было попытаться ещё раз
+        gameInstanceRef.current = undefined;
       }
     };
 
-    let cleanup: (() => void) | undefined;
+    initPhaser();
 
-    loadGame().then((cleanupFn) => {
-      cleanup = cleanupFn;
-    });
-
-    // Cleanup при размонтировании компонента
     return () => {
-      if (cleanup) {
-        cleanup();
+      // при размонтировании (или втором unmount в StrictMode)
+      if (destroyFn) {
+        destroyFn();
       }
     };
   }, []);
@@ -52,12 +75,12 @@ function FigureWarsGame() {
           if (el) drop(el);
         }}
       >
-        <div ref={gameRef}></div>
+        {/* Сюда Phaser вставит одно единственное <canvas> */}
+        <div ref={containerRef} className={styles.game}></div>
+        <TowerMenu />
       </div>
 
       <InterfaceGame />
     </div>
   );
 }
-
-export default FigureWarsGame;

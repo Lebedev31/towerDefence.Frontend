@@ -1,15 +1,15 @@
 import * as Phaser from "phaser";
 import { SupportCreate } from "./supportCreateClass";
 import { SupportUpdate } from "./supportUpdateClass";
-import { BasicTower } from "../Tower/basicTower";
+import { BasicTower } from "../Enity/Towers/basicTower";
 import {
   RifleTowers,
   MagicTowers,
-  RifleTowersPatch,
-  MagicTowersPatch,
   ArtilleryTowers,
   ArtilleryTowersPatch,
-} from "@/type/type";
+  RifleTowersPatch,
+  MagicTowersPatch,
+} from "@/type/towerTypes";
 
 export class MainScene extends Phaser.Scene {
   supportCreate!: SupportCreate;
@@ -52,6 +52,8 @@ export class MainScene extends Phaser.Scene {
     // Создание игровых объектов
     this.supportCreate.createMap(); // загрузка карты
     this.supportCreate.towersInit();
+    this.supportCreate.createLine();
+    this.supportCreate.enemyInit();
   }
 
   update(time: number, delta: number): void {
