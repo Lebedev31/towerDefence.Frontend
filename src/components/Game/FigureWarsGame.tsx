@@ -6,7 +6,7 @@ import { useTowerDropHook } from "./Hooks/useTowerDropHook";
 import type PhaserType from "phaser";
 import { useProccesingSocketGameEventQuery } from "@/Api/ApiSlice/game.api.slice";
 import styles from "@/styles/game/game.module.scss";
-import { TowerMenu } from "./InterfaceGame/TowerMenu";
+import TowerMenu from "./InterfaceGame/TowerMenu";
 
 export default function FigureWarsGame() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -76,8 +76,9 @@ export default function FigureWarsGame() {
         }}
       >
         {/* Сюда Phaser вставит одно единственное <canvas> */}
-        <div ref={containerRef} className={styles.game}></div>
-        <TowerMenu />
+        <div ref={containerRef} className={styles.game}>
+          <TowerMenu />
+        </div>
       </div>
 
       <InterfaceGame />

@@ -44,9 +44,8 @@ export class SupportCreate extends SupportSceneAbctract {
     graphics.strokePath();
   }
   towersInit() {
-    new TowerManager(this.scene);
+    TowerManager.getInstance(this.scene);
   }
-
   enemyInit() {
     new EnemyStaticManager(this.scene);
   }

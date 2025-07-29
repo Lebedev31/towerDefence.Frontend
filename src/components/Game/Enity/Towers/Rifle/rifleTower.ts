@@ -1,6 +1,6 @@
 import { BasicTower } from "../basicTower";
 import * as Phaser from "phaser";
-import { Characteristics } from "../basicTower";
+import { Characteristics } from "@/type/characteristics";
 import { EnityManager } from "../../enityManager";
 import { AddTowerCoordinates } from "@/type/gameHelpers";
 import { RifleTowers } from "@/type/towerTypes";

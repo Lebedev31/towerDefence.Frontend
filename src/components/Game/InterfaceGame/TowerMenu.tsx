@@ -1,123 +1,91 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { closeTowerMenu, removeGameObject } from "@/Api/Slice/mainGameSlice";
-import { RootState } from "@/Api/store";
+"use client";
 import styles from "@/styles/game/towerMenu.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Api/store";
+import Image from "next/image";
+import { FieldCell } from "@/type/gameHelpers";
 
-interface TowerMenuProps {}
+function TowerMenu() {
+  const menu = useSelector((state: RootState) => state.towerMenu);
+  const field = useSelector((state: RootState) => state.mainGame.field); // Предполагаем, что поле доступно в store
 
-export const TowerMenu: React.FC<TowerMenuProps> = () => {
-  const dispatch = useDispatch();
-  const towerMenu = useSelector((state: RootState) => state.mainGame.towerMenu);
+  // Примеры путей к изображениям (замените на свои)
+  const towerImages = [
+    "/assets/imgMenu/выбратьцель.png",
+    "/assets/imgMenu/заклинание.png",
+    "/assets/imgMenu/повысить уровень.png",
+    "/assets/imgMenu/преобразование.png",
+  ];
 
-  if (!towerMenu.isOpen) {
-    return null;
-  }
+  // Заглушки для чисел
+  const towerLevels = [10, 20, 30, 40];
 
-  const handleClose = () => {
-    dispatch(closeTowerMenu());
-  };
+  const getMenuPosition = (towerCell: FieldCell) => {
+    if (!towerCell) return { top: 100, left: 100 };
 
-  const handleUpgrade = () => {
-    console.log("Upgrading tower:", towerMenu.towerName);
-    // Логика улучшения башни
-  };
+    const cellCenterX = (towerCell.x1 + towerCell.x2) / 2;
+    const cellCenterY = (towerCell.y1 + towerCell.y2) / 2;
 
-  const handleSell = () => {
-    if (towerMenu.index !== null) {
-      dispatch(removeGameObject(towerMenu.index));
+    // Размеры меню
+    const menuWidth = 120;
+    const menuHeight = 40;
+
+    let top: number;
+    let left: number;
+
+    // Если башня на верхней строке, располагаем меню ниже башни
+    if (towerCell.cellY === 0) {
+      top = towerCell.y2 + 5; // На 5px ниже нижнего края ячейки
+    } else {
+      // Для всех остальных случаев - строго по центру башни со смещением вверх
+      top = cellCenterY - menuHeight / 2 - 50;
     }
-    dispatch(closeTowerMenu());
+
+    // Базовая позиция по центру
+    left = cellCenterX - menuWidth / 2;
+
+    // Смещение для крайних колонок
+    if (towerCell.cellX === 0) {
+      // Левая колонка - смещаем вправо
+      left += 30;
+    } else if (towerCell.cellX === 24) {
+      // Правая колонка (25-1) - смещаем влево
+      left -= 30;
+    }
+
+    return { top, left };
   };
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleClose();
-    }
-  };
+  const menuPosition = getMenuPosition(field[menu.square]);
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.menu}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>{towerMenu.towerName}</h2>
-          <button onClick={handleClose} className={styles.close}>
-            ×
-          </button>
+    <div
+      className={styles.towerMenu}
+      style={{
+        display: menu.isOpen ? "flex" : "none",
+        top: `${menuPosition.top}px`,
+        left: `${menuPosition.left}px`,
+      }}
+    >
+      {towerImages.map((img, index) => (
+        <div
+          key={index}
+          className={styles.towerItem}
+          onClick={() => console.log(`Clicked tower ${index + 1}`)}
+        >
+          <div className={styles.imageContainer}>
+            <Image
+              src={img}
+              alt={`Tower ${index + 1}`}
+              fill
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+          <div className={styles.level}>{towerLevels[index]}</div>
         </div>
-
-        <div className={styles.stats}>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>HP</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.hp}
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>Physical Damage</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.physicalDamage}
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>Magical Damage</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.magicalDamage}
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>Poisonous Damage</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.poisonousDamage}
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>Range</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.range}
-            </div>
-          </div>
-          <div className={styles.statCard}>
-            <div className={styles.statLabel}>Speed</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.speed}
-            </div>
-          </div>
-          <div className={`${styles.statCard} ${styles.defense}`}>
-            <div className={styles.statLabel}>Physical Defence</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.physicalDefence}
-            </div>
-          </div>
-          <div className={`${styles.statCard} ${styles.defense}`}>
-            <div className={styles.statLabel}>Magical Defence</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.magicalDefence}
-            </div>
-          </div>
-          <div className={`${styles.statCard} ${styles.defense}`}>
-            <div className={styles.statLabel}>Poisonous Defence</div>
-            <div className={styles.statValue}>
-              {towerMenu.characteristics?.poisonousDefence}
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.actions}>
-          <button
-            onClick={handleUpgrade}
-            className={`${styles.actionBtn} ${styles.upgrade}`}
-          >
-            Upgrade
-          </button>
-          <button
-            onClick={handleSell}
-            className={`${styles.actionBtn} ${styles.sell}`}
-          >
-            Sell
-          </button>
-        </div>
-      </div>
+      ))}
     </div>
   );
-};
+}
+
+export default TowerMenu;

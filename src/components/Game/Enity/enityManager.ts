@@ -1,16 +1,25 @@
 import * as Phaser from "phaser";
 import { SupportSceneAbctract } from "../scene/abstractScene";
 import { GameObject } from "@/type/gameHelpers";
-import { RifleTowers, MagicTowers, ArtilleryTowers } from "@/type/towerTypes";
+import {
+  RifleTowers,
+  MagicTowers,
+  ArtilleryTowers,
+  SupportTowers,
+  Generators,
+} from "@/type/towerTypes";
 import { RifleTower } from "../Enity/Towers/Rifle/rifleTower";
 import { ArtilleryTower } from "./Towers/Artillery/artilleryTower";
 import { RocketLauncherTower } from "./Towers/Artillery/rocketLauncherTower";
 import { MagicTower } from "./Towers/Magic/magicTower";
+import { SupportTower } from "./Towers/Support/supportTower";
+import { Generator } from "./Towers/Generators/generator";
 import {
   characteristicsRifleTower,
   characteristicsMagicTower,
   characteristicsArtilleryTower,
   characteristicsRocketLauncherTower,
+  characteristicsBasicSupportTower,
 } from "./Towers/configTowers";
 import { AddTowerCoordinates } from "@/type/gameHelpers";
 
@@ -31,8 +40,6 @@ export abstract class EnityManager extends SupportSceneAbctract {
       console.error(`Не удалось получить координаты для индекса ${index}`);
       return;
     }
-
-    console.log(`Создаем enemy объект: ${name} в позиции ${index}`);
 
     // Выбираем тип объекта по name
     switch (name) {
@@ -87,6 +94,30 @@ export abstract class EnityManager extends SupportSceneAbctract {
         this.enityObject.push(rocketLauncherTower);
         break;
 
+      case SupportTowers.RegularSupportTower:
+        const supportTower = new SupportTower(
+          this.scene,
+          coord,
+          characteristicsBasicSupportTower,
+          this,
+          enemy
+        );
+
+        this.enityObject.push(supportTower);
+        break;
+
+      case Generators.RegularGenerator:
+        const generator = new Generator(
+          this.scene,
+          coord,
+          characteristicsBasicSupportTower,
+          this,
+          enemy
+        );
+
+        this.enityObject.push(generator);
+        break;
+
       default:
         console.error(`Неизвестный тип объекта: ${name}`);
         break;
@@ -119,6 +150,8 @@ export abstract class EnityManager extends SupportSceneAbctract {
       const cellWidth = coord.square.x2 - coord.square.x1;
       const cellHeight = coord.square.y2 - coord.square.y1;
 
+      sprite.setInteractive();
+
       sprite.setDisplaySize(cellWidth * 0.8, cellHeight * 0.8); // 80% от размера ячейки
 
       // Добавляем спрайт в контейнер
@@ -137,6 +170,8 @@ export abstract class EnityManager extends SupportSceneAbctract {
       console.log(
         `Создан enemy объект: ${gameObject.name} в позиции (${coord.x}, ${coord.y})`
       );
+
+      return sprite;
     } catch (error) {
       console.error(`Ошибка при создании объекта ${gameObject.name}:`, error);
     }

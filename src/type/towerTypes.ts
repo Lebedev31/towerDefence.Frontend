@@ -29,6 +29,24 @@ export enum ArtilleryTowersPatch {
   RegularArtilleryTowerPatch = "/assets/imgGame/артилерия.png",
   RocketLauncherTowerPatch = "/assets/imgGame/ракетница.png",
 }
+// enum башен поддержки
+export enum SupportTowersPatch {
+  RegularSupportTowerPatch = "/assets/imgGame/заморозка.png",
+}
+
+export enum SupportTowers {
+  RegularSupportTower = "regularSupportTower",
+}
+
+// enum для генераторов
+
+export enum GeneratorsPatch {
+  RegularGeneratorPatch = "/assets/imgGame/генератор.png",
+}
+
+export enum Generators {
+  RegularGenerator = "regularGenerator",
+}
 
 // тип координат башни
 export type CoordinatesTower = {

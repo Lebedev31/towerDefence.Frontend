@@ -9,6 +9,7 @@ import { globalChatApi } from "./ApiSlice/global.api.chats.slice";
 import mainGameReduser from "./Slice/mainGameSlice";
 import { socketMiddleware } from "./middleware";
 import { gameApiSlice } from "./ApiSlice/game.api.slice";
+import { towerMenuSlice } from "./Slice/towerMenuSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     [globalChatApi.reducerPath]: globalChatApi.reducer,
     [gameApiSlice.reducerPath]: gameApiSlice.reducer,
     mainGame: mainGameReduser,
+    towerMenu: towerMenuSlice.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>

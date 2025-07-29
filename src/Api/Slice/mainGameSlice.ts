@@ -6,31 +6,11 @@ import { FieldCell, GameObject } from "@/type/gameHelpers";
 
 export type TypeGame = "defence" | "attack";
 
-export interface Characteristics {
-  hp: number;
-  physicalDamage: number;
-  magicalDamage: number;
-  poisonousDamage: number;
-  physicalDefence: number;
-  magicalDefence: number;
-  poisonousDefence: number;
-  range: number;
-  speed: number;
-}
-
-interface TowerMenuState {
-  isOpen: boolean;
-  towerName: string | null;
-  index: number | null;
-  characteristics: Characteristics | null;
-}
-
 export interface MainGameInitialState {
   game: TypeGame;
   coordinatesTower: CoordinatesTower | undefined;
   field: FieldCell[];
   configuration: any;
-  towerMenu: TowerMenuState;
 }
 
 const initialState: MainGameInitialState = {
@@ -38,12 +18,6 @@ const initialState: MainGameInitialState = {
   coordinatesTower: undefined,
   field: [],
   configuration: null,
-  towerMenu: {
-    isOpen: false,
-    towerName: null,
-    index: null,
-    characteristics: null,
-  },
 };
 
 export const mainGameSlice = createSlice({
@@ -125,29 +99,6 @@ export const mainGameSlice = createSlice({
     setConfiguration(state, action: PayloadAction<any>) {
       state.configuration = action.payload;
     },
-
-    openTowerMenu: (
-      state,
-      action: PayloadAction<{
-        towerName: string;
-        index: number;
-        characteristics: Characteristics;
-      }>
-    ) => {
-      state.towerMenu = {
-        isOpen: true,
-        ...action.payload,
-      };
-    },
-
-    closeTowerMenu: (state) => {
-      state.towerMenu = {
-        isOpen: false,
-        towerName: null,
-        index: null,
-        characteristics: null,
-      };
-    },
   },
 });
 
@@ -161,8 +112,6 @@ export const {
   removeGameObject,
   updateGameObjectHp,
   setConfiguration,
-  openTowerMenu,
-  closeTowerMenu,
 } = mainGameSlice.actions;
 
 export default mainGameSlice.reducer;

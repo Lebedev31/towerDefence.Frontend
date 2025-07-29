@@ -2,6 +2,7 @@ import * as Phaser from "phaser";
 import { EnityManager } from "../enityManager";
 import { CoordinatesTower } from "@/type/gameHelpers";
 import { store } from "@/Api/store";
+import { Shots } from "../Shots/Shots";
 export type SquareTower = {
   nameImg: string;
   index: number;
@@ -9,11 +10,12 @@ export type SquareTower = {
 
 export class TowerManager extends EnityManager {
   public coord: CoordinatesTower | undefined;
-  public towers: Phaser.GameObjects.Container[] = [];
-
+  public shotManager: Shots;
+  private static instance: TowerManager;
   constructor(scene: Phaser.Scene) {
     super(scene);
     this.setupGameObjectTracking();
+    this.shotManager = new Shots(scene);
   }
 
   setupGameObjectTracking() {
@@ -25,6 +27,8 @@ export class TowerManager extends EnityManager {
         const calc = this.squareCalculationTower(current);
         if (calc && this.coord) {
           this.choiseEnityObject(calc, this.coord.pathImg, false);
+          this.shotManager.createShots(this.coord.pathImg);
+          console.log(this.enityObject);
         }
         this.coord = current;
       }
@@ -45,5 +49,20 @@ export class TowerManager extends EnityManager {
         !item.deathZone
     );
     return foundSquare;
+  }
+
+  public static getInstance(scene: Phaser.Scene): TowerManager {
+    if (!TowerManager.instance) {
+      TowerManager.instance = new TowerManager(scene);
+    }
+    return TowerManager.instance;
+  }
+
+  getShots() {
+    if (this.coord) {
+      this.enityObject.forEach(() => {
+        this.shotManager.shoot(this?.coord.x, this?.coord.y, "magicShots1");
+      });
+    }
   }
 }

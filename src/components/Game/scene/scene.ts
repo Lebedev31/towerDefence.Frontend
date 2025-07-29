@@ -9,7 +9,13 @@ import {
   ArtilleryTowersPatch,
   RifleTowersPatch,
   MagicTowersPatch,
+  SupportTowers,
+  SupportTowersPatch,
+  Generators,
+  GeneratorsPatch,
 } from "@/type/towerTypes";
+
+import { MagicShots, MagicShotsPath } from "@/type/shots";
 
 export class MainScene extends Phaser.Scene {
   supportCreate!: SupportCreate;
@@ -24,7 +30,6 @@ export class MainScene extends Phaser.Scene {
     // Создаем экземпляры классов-помощников
     this.supportCreate = new SupportCreate(this);
     this.supportUpdate = new SupportUpdate(this);
-    //this.basicTower = new BasicTower(this);
   }
 
   preload(): void {
@@ -46,6 +51,18 @@ export class MainScene extends Phaser.Scene {
       ArtilleryTowers.RocketLauncherTower,
       ArtilleryTowersPatch.RocketLauncherTowerPatch
     );
+
+    this.load.image(
+      SupportTowers.RegularSupportTower,
+      SupportTowersPatch.RegularSupportTowerPatch
+    );
+
+    this.load.image(
+      Generators.RegularGenerator,
+      GeneratorsPatch.RegularGeneratorPatch
+    );
+
+    this.load.image(MagicShots.MagicShots1, MagicShotsPath.MagicShotsPath);
   }
 
   create(): void {
@@ -56,7 +73,8 @@ export class MainScene extends Phaser.Scene {
     this.supportCreate.enemyInit();
   }
 
-  update(time: number, delta: number): void {
+  update(): void {
     // Ваша логика обновления, которая выполняется каждый кадр
+    this.supportUpdate.updateShots();
   }
 }

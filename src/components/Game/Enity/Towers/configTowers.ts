@@ -1,4 +1,4 @@
-import { Characteristics } from "./basicTower";
+import { Characteristics } from "@/type/characteristics";
 
 export const characteristicsRifleTower: Characteristics = {
   hp: 120,
@@ -10,6 +10,7 @@ export const characteristicsRifleTower: Characteristics = {
   magicalDefence: 3,
   poisonousDefence: 2,
   speed: 3,
+  gold: 50,
 };
 
 export const characteristicsMagicTower: Characteristics = {
@@ -22,6 +23,7 @@ export const characteristicsMagicTower: Characteristics = {
   magicalDefence: 8,
   poisonousDefence: 5,
   speed: 4,
+  gold: 70,
 };
 
 export const characteristicsArtilleryTower: Characteristics = {
@@ -34,6 +36,7 @@ export const characteristicsArtilleryTower: Characteristics = {
   magicalDefence: 5,
   poisonousDefence: 3,
   speed: 8,
+  gold: 75,
 };
 
 export const characteristicsRocketLauncherTower: Characteristics = {
@@ -46,4 +49,34 @@ export const characteristicsRocketLauncherTower: Characteristics = {
   magicalDefence: 8,
   poisonousDefence: 5,
   speed: 6,
+  gold: 90,
+};
+
+export const characteristicsBasicSupportTower: Characteristics = {
+  hp: 150,
+  physicalDamage: 0,
+  magicalDamage: 0,
+  poisonousDamage: 0,
+  range: 60,
+  physicalDefence: 5,
+  magicalDefence: 5,
+  poisonousDefence: 5,
+  speed: 5,
+  gold: 50,
+  extra: {
+    slowdown: 1,
+  },
+};
+
+export const characteristicsGenerator: Characteristics = {
+  hp: 1200,
+  physicalDamage: 0,
+  magicalDamage: 0,
+  poisonousDamage: 0,
+  range: 70,
+  physicalDefence: 10,
+  magicalDefence: 13,
+  poisonousDefence: 12,
+  speed: 0,
+  gold: 50,
 };
